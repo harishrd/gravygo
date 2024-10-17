@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Index</title>
+<title>Failed</title>
 </head>
 <body>
-	<a href="login.jsp">Login</a>
-	<a href="signup.jsp">SignUp</a>
+	<h2>Something went wrong</h2>
+	<h3><%out.println(session.getAttribute("errorMessage")); %></h3>
 </body>
 </html>

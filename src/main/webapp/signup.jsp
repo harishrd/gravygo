@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Index</title>
+<title>SignUp Page</title>
 </head>
 <body>
-	<a href="login.jsp">Login</a>
-	<a href="signup.jsp">SignUp</a>
+<!-- check screenshots to complete task -->
 </body>
 </html>

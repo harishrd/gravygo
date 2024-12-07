@@ -22,7 +22,7 @@ public class RestaurantDAOImpl implements RestaurantDAO
     Restaurant restaurant;
 
     private static final String ADD_RESTAURANT = "insert into `restaurant`(`restaurantName`, `deliveryTime`, `cuisineType`, `address`, `rating`, `isActive`, `adminId`) values(?,?,?,?,?,?,?)";
-    private static final String SELECT_ALL_RESTAURANTS = "select * from `  `";
+    private static final String SELECT_ALL_RESTAURANTS = "select * from `restaurant`";
     private static final String SELECT_ON_ID = "select * from `restaurant` where `restaurantId`=?";
     private static final String UPDATE_ON_ID = "update `restaurant` set `restaurantName`=?, `deliveryTime`=?, `cuisineType`=?, `address`=?, `rating`=?, `isActive`=?, `adminId`=? where `restaurantId`=?";
     private static final String DELETE_ON_ID = "delete from `restaurant` where `restaurantId`=?";

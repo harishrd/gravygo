@@ -15,32 +15,37 @@ import com.gravygo.model.User;
 
 @SuppressWarnings("serial")
 @WebServlet("/login")
-public class LoginServlet extends HttpServlet
+public class LoginServlet extends HttpServlet 
 {
-	
 	private HttpSession session;
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
-	{
-		String email = req.getParameter("email");
-		String password = req.getParameter("password");
-		
-		UserDAO userDAO = new UserDAOImpl();
-		
-		User user = userDAO.getUser(email); // the code in UserDAOImpl will throw an exception if user is null, so here user will not be null
-		
-		session = req.getSession();
-		
-		if (user != null && password.equals(user.getPassword())) {
-			session.setAttribute("loggedInUser", user);	
-			resp.sendRedirect("getAllRestaurants"); // call a servlet which adds all the restaurants into the session and then calls home.jsp
-//			resp.sendRedirect("home.jsp");
-		}
-		else
-		{
-			session.setAttribute("errorMessage", "Invalid credentials. Please try again.");
-			resp.sendRedirect("failure.jsp"); // rather we'll display a message saying invalid credentials
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			String email = req.getParameter("email");
+			String password = req.getParameter("password");
+
+			UserDAO userDAO = new UserDAOImpl();
+			User user = userDAO.getUser(email);
+
+			session = req.getSession();
+
+			if (user != null && password.equals(user.getPassword())) {
+				session.setAttribute("loggedInUser", user);
+
+				resp.sendRedirect("home");  // Redirect to home page on successful login
+			} else {
+				// Forward to error page with custom error message and sourcePage parameter
+				req.setAttribute("errorMessage", "Invalid credentials. Please try again.");
+				req.setAttribute("sourcePage", "login"); // Indicate the source page
+				req.getRequestDispatcher("/error.jsp").forward(req, resp);  // Forward to centralized error page
+			}
+		} catch (Exception e) {
+			// Handle unexpected exceptions and forward to error page
+			req.setAttribute("errorMessage", "An unexpected error occurred during login.");
+			req.setAttribute("exception", e);
+			req.setAttribute("sourcePage", "login"); // Indicate the source page
+			req.getRequestDispatcher("/error.jsp").forward(req, resp);
 		}
 	}
 }

@@ -78,19 +78,22 @@ public class UserDAOImpl implements UserDAO
 
 	@Override
 	public User getUser(String email) {
-		try 
-		{
-			pstmt = con.prepareStatement(SELECT_ON_EMAIL);
-			pstmt.setString(1, email);
-			res = pstmt.executeQuery();
-			extractUsersFromResultSet(res);
-		} 
-		catch(SQLException e) 
-		{
-			e.printStackTrace();
-		}
-		return userList.get(0);
+	    try {
+	        pstmt = con.prepareStatement(SELECT_ON_EMAIL);
+	        pstmt.setString(1, email);
+	        res = pstmt.executeQuery();
+	        extractUsersFromResultSet(res);
+
+	        // Check if userList is empty before accessing the first element
+	        if (!userList.isEmpty()) {
+	            return userList.get(0);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null; // Return null if no user is found
 	}
+
 
 	@Override
 	public int updateUser(User u) {

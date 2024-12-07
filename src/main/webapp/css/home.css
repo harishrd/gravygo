@@ -1,0 +1,72 @@
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light Grey Background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for the Restaurants List */
+.container {
+    background: #fff; /* White Background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+}
+
+/* Headings Styling */
+h1, h2 {
+    color: #e74c3c; /* Vibrant Red */
+}
+
+/* Restaurant List Styling */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 18px;
+    color: #333; /* Dark Grey */
+    margin-bottom: 10px;
+}
+
+/* Links Styling */
+a {
+    color: #388e3c; /* Tomato Leaf Green */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+a:hover {
+    color: #2c6e2f; /* Darker Green */
+}
+
+a:active {
+    color: #1b4d21; /* Dark Green */
+}
+
+/* Message Styling (e.g., for "No restaurants available") */
+p {
+    font-size: 16px;
+    color: #333; /* Dark Grey */
+}
+
+/* Error Message Styling */
+.error-message {
+    color: #e74c3c; /* Vibrant Red */
+    font-size: 14px;
+    background-color: #f8d7da; /* Light Red Background */
+    padding: 10px;
+    border: 1px solid #f5c6cb; /* Light Red Border */
+    margin-bottom: 10px;
+    text-align: center;
+}

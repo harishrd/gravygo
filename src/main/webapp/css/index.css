@@ -1,0 +1,81 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9; /* Light grey background for contrast */
+    color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.index-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Softer shadow */
+    border-radius: 10px;
+}
+
+.index-container h1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #e74c3c; /* Vibrant red for the title */
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #388e3c; /* Tomato leaf green for buttons */
+    padding: 12px 24px;
+    margin: 0 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+nav a:hover {
+    background-color: #2c6e2f; /* Slightly darker green on hover */
+    transform: scale(1.05);
+}
+
+nav a:active {
+    background-color: #1b4d21; /* Dark green when clicked */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .index-container {
+        padding: 20px;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+        font-size: 1rem;
+        padding: 10px 20px;
+        margin: 0 10px;
+    }
+
+    .index-container h1 {
+        font-size: 2.2rem;
+    }
+}

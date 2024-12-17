@@ -46,6 +46,11 @@
 
             <button type="submit">Sign Up</button>
         </form>
+
+        <!-- Already have an account? -->
+        <div class="login-link">
+            <p>Already have an account? <a href="login.jsp">Login here</a>.</p>
+        </div>
     </div>
 </body>
 

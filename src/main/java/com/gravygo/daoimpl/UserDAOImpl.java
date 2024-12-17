@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO
 	private PreparedStatement pstmt;
 	private Statement stmt;
 	private ResultSet res;
-	List<User> userList = new ArrayList<>();
+	private List<User> userList;
 	User user;
 
 	private static final String ADD_USER = "insert into `user`(`username`,`email`,`phoneNumber`,`password`,`address`) values(?,?,?,?,?)";
@@ -67,7 +67,7 @@ public class UserDAOImpl implements UserDAO
 			stmt = con.createStatement();
 			res = stmt.executeQuery(SELECT_ALL_USERS);
 
-			extractUsersFromResultSet(res);
+			userList = extractUsersFromResultSet(res);
 		} 
 		catch(SQLException e) 
 		{
@@ -129,9 +129,10 @@ public class UserDAOImpl implements UserDAO
 		return 0;
 	}
 
-	private void extractUsersFromResultSet(ResultSet res)
+	private List<User> extractUsersFromResultSet(ResultSet res)
 	{
 		try {
+			userList = new ArrayList<>();
 			while (res.next()) 
 			{
 				userList.add(new User(res.getInt("userId"),
@@ -144,5 +145,6 @@ public class UserDAOImpl implements UserDAO
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return userList;
 	}
 }

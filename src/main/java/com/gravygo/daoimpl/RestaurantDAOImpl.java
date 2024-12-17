@@ -1,19 +1,13 @@
 package com.gravygo.daoimpl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.gravygo.dao.RestaurantDAO;
 import com.gravygo.dbUtils.DBUtils;
 import com.gravygo.model.Restaurant;
 
-public class RestaurantDAOImpl implements RestaurantDAO
-{
+public class RestaurantDAOImpl implements RestaurantDAO {
     Connection con;
     private PreparedStatement pstmt;
     private Statement stmt;
@@ -21,14 +15,13 @@ public class RestaurantDAOImpl implements RestaurantDAO
     List<Restaurant> restaurantList = new ArrayList<>();
     Restaurant restaurant;
 
-    private static final String ADD_RESTAURANT = "insert into `restaurant`(`restaurantName`, `deliveryTime`, `cuisineType`, `address`, `rating`, `isActive`, `adminId`) values(?,?,?,?,?,?,?)";
-    private static final String SELECT_ALL_RESTAURANTS = "select * from `restaurant`";
-    private static final String SELECT_ON_ID = "select * from `restaurant` where `restaurantId`=?";
-    private static final String UPDATE_ON_ID = "update `restaurant` set `restaurantName`=?, `deliveryTime`=?, `cuisineType`=?, `address`=?, `rating`=?, `isActive`=?, `adminId`=? where `restaurantId`=?";
-    private static final String DELETE_ON_ID = "delete from `restaurant` where `restaurantId`=?";
+    private static final String ADD_RESTAURANT = "INSERT INTO `restaurant`(`restaurantName`, `deliveryTime`, `cuisineType`, `address`, `rating`, `isActive`, `adminId`, `imgPath`) VALUES(?,?,?,?,?,?,?,?)";
+    private static final String SELECT_ALL_RESTAURANTS = "SELECT * FROM `restaurant`";
+    private static final String SELECT_ON_ID = "SELECT * FROM `restaurant` WHERE `restaurantId`=?";
+    private static final String UPDATE_ON_ID = "UPDATE `restaurant` SET `restaurantName`=?, `deliveryTime`=?, `cuisineType`=?, `address`=?, `rating`=?, `isActive`=?, `adminId`=?, `imgPath`=? WHERE `restaurantId`=?";
+    private static final String DELETE_ON_ID = "DELETE FROM `restaurant` WHERE `restaurantId`=?";
 
-    public RestaurantDAOImpl() 
-    {
+    public RestaurantDAOImpl() {
         try {
             con = DBUtils.myConnect();
         } catch (Exception e) {
@@ -47,6 +40,7 @@ public class RestaurantDAOImpl implements RestaurantDAO
             pstmt.setDouble(5, restaurant.getRating());
             pstmt.setBoolean(6, restaurant.isActive());
             pstmt.setInt(7, restaurant.getAdminId());
+            pstmt.setString(8, restaurant.getImgPath());
 
             return pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -61,6 +55,7 @@ public class RestaurantDAOImpl implements RestaurantDAO
             stmt = con.createStatement();
             res = stmt.executeQuery(SELECT_ALL_RESTAURANTS);
 
+            restaurantList.clear();
             extractRestaurantsFromResultSet(res);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,11 +69,24 @@ public class RestaurantDAOImpl implements RestaurantDAO
             pstmt = con.prepareStatement(SELECT_ON_ID);
             pstmt.setInt(1, restaurantId);
             res = pstmt.executeQuery();
-            extractRestaurantsFromResultSet(res);
+
+            if (res.next()) {
+                return new Restaurant(
+                    res.getInt("restaurantId"),
+                    res.getString("restaurantName"),
+                    res.getInt("deliveryTime"),
+                    res.getString("cuisineType"),
+                    res.getString("address"),
+                    res.getDouble("rating"),
+                    res.getBoolean("isActive"),
+                    res.getInt("adminId"),
+                    res.getString("imgPath")
+                );
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return restaurantList.get(0);
+        return null;
     }
 
     @Override
@@ -92,7 +100,8 @@ public class RestaurantDAOImpl implements RestaurantDAO
             pstmt.setDouble(5, restaurant.getRating());
             pstmt.setBoolean(6, restaurant.isActive());
             pstmt.setInt(7, restaurant.getAdminId());
-            pstmt.setInt(8, restaurant.getRestaurantId());
+            pstmt.setString(8, restaurant.getImgPath());
+            pstmt.setInt(9, restaurant.getRestaurantId());
 
             return pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -124,7 +133,8 @@ public class RestaurantDAOImpl implements RestaurantDAO
                     res.getString("address"),
                     res.getDouble("rating"),
                     res.getBoolean("isActive"),
-                    res.getInt("adminId")
+                    res.getInt("adminId"),
+                    res.getString("imgPath")
                 ));
             }
         } catch (SQLException e) {

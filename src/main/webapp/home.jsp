@@ -11,33 +11,74 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/home.css">
 <title>Home</title>
-</head><body>
+</head>
+<body>
+    <header>
+	    <div class="project-title">GravyGo</div>
+	    <div class="nav-links">
+	        <% 
+		        User loggedInUser = (User) session.getAttribute("loggedInUser");
+		        if (loggedInUser != null) { %>
+		            <span>Welcome, <%= loggedInUser.getUsername() %>!</span>
+		            <a href="cart">Cart</a>
+		            <a href="orderhistory">Order History</a>
+		            <a href="logout">Logout</a>
+	        <% } else { %>
+	            <a href="login.jsp">Login</a>
+	            <a href="register.jsp">Register</a>
+	        <% } %>
+	    </div>
+	</header>	
+    
+    
+    <h2>Featured Restaurants</h2>
+    <section class="restaurant-list">
+	   <%
+	       // Get the RestaurantDAO object and fetch all restaurants
+	       ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) session.getAttribute("restaurants");
+	
+	       // Display the list of available restaurants
+	       if (restaurants != null && !restaurants.isEmpty()) {
+	   %>
+			<div class="restaurant-container">
+			    <% for (Restaurant restaurant : restaurants) { %>
+			        <div class="restaurant-card">
+			            <img src="images/<%= restaurant.getImgPath() %>" alt="Image of <%= restaurant.getRestaurantName() %>">
+			            <h3><%= restaurant.getRestaurantName() %></h3>
+			            <p>
+			                Cuisine: <%= restaurant.getCuisineType() %><br>
+			                Delivery Time: <%= restaurant.getDeliveryTime() %> mins
+			            </p>
+			            <a href="menu?restaurantId=<%= restaurant.getRestaurantId() %>" class="view-menu">View Menu</a>
+			        </div>
+			    <% } %>
+			</div>
+	   <%
+	       } else {
+	           out.println("<p>No restaurants available at the moment.</p>");
+	       }
+	   %>
+	</section>
+    <%-- <section class="restaurant-list">
     <%
-        // Get the logged-in user from session
-        User user = (User) session.getAttribute("loggedInUser");
+    	// Get the RestaurantDAO object and fetch all restaurants
+        /* RestaurantDAO restaurantDAO = new RestaurantDAOImpl();
+        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) restaurantDAO.getAllRestaurants(); */
+        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) session.getAttribute("restaurants");
 
-        // If the user is logged in, display the restaurant list
-        if (user != null) {
-            // Get the RestaurantDAO object and fetch all restaurants
-            /* RestaurantDAO restaurantDAO = new RestaurantDAOImpl();
-            ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) restaurantDAO.getAllRestaurants(); */
-            ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) session.getAttribute("restaurants");
-
-            // Display the list of available restaurants
-            if (restaurants != null && !restaurants.isEmpty()) {
-                out.println("<h2>Available Restaurants:</h2>");
-                out.println("<ul>");
-                for (Restaurant restaurant : restaurants) {
-                    out.println("<li>" + restaurant.getRestaurantName() + " - " + restaurant.getCuisineType() + "</li>");
-                }
-                out.println("</ul>");
-            } else {
-                out.println("<p>No restaurants available at the moment.</p>");
+        // Display the list of available restaurants
+        if (restaurants != null && !restaurants.isEmpty()) {
+            out.println("<h2>Available Restaurants:</h2>");
+            out.println("<ul>");
+            for (Restaurant restaurant : restaurants) {
+                out.println("<li>" + restaurant.getRestaurantName() + " - " + restaurant.getCuisineType() + "</li>");
             }
+            out.println("</ul>");
         } else {
-            out.println("<h1><a href='index.jsp'>Please Login</a></h1>");
+            out.println("<p>No restaurants available at the moment.</p>");
         }
     %>
+    </section> --%>
 </body>
 
 </html>

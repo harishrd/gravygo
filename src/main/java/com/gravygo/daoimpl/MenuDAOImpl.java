@@ -18,12 +18,12 @@ public class MenuDAOImpl implements MenuDAO
     private PreparedStatement pstmt;
     private Statement stmt;
     private ResultSet res;
-    List<Menu> menuList = new ArrayList<>();
-    Menu menu;
+    List<Menu> menuList;
 
     private static final String ADD_MENU = "insert into `menu`(`restaurantId`, `menuName`, `price`, `description`, `isAvailable`, `imgPath`) values(?,?,?,?,?,?)";
     private static final String SELECT_ALL_MENUS = "select * from `menu`";
     private static final String SELECT_ON_ID = "select * from `menu` where `menuId`=?";
+    private static final String query = "SELECT * FROM menu WHERE restaurantId = ?";
     private static final String UPDATE_ON_ID = "update `menu` set `restaurantId`=?, `menuName`=?, `price`=?, `description`=?, `isAvailable`=?, `imgPath`=? where `menuId`=?";
     private static final String DELETE_ON_ID = "delete from `menu` where `menuId`=?";
 
@@ -59,12 +59,11 @@ public class MenuDAOImpl implements MenuDAO
         try {
             stmt = con.createStatement();
             res = stmt.executeQuery(SELECT_ALL_MENUS);
-
-            extractMenusFromResultSet(res);
+            return extractMenusFromResultSet(res); // Use extractMenusFromResultSet to return the list
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return menuList;
+        return new ArrayList<>();
     }
 
     @Override
@@ -73,13 +72,26 @@ public class MenuDAOImpl implements MenuDAO
             pstmt = con.prepareStatement(SELECT_ON_ID);
             pstmt.setInt(1, menuId);
             res = pstmt.executeQuery();
-            extractMenusFromResultSet(res);
+            return extractMenuFromResultSet(res); // Use extractMenuFromResultSet to return a single menu
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return menuList.get(0);
+        return null;
     }
 
+    @Override
+    public List<Menu> getMenusByRestaurantId(int restaurantId) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, restaurantId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return extractMenusFromResultSet(rs); // Use extractMenusFromResultSet for the list of menus
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    
     @Override
     public int updateMenu(Menu menu) {
         try {
@@ -111,21 +123,38 @@ public class MenuDAOImpl implements MenuDAO
         return 0;
     }
 
-    private void extractMenusFromResultSet(ResultSet res) {
+    private List<Menu> extractMenusFromResultSet(ResultSet res) {
+        List<Menu> menuList = new ArrayList<>();
         try {
             while (res.next()) {
-                menuList.add(new Menu(
-                    res.getInt("menuId"),
-                    res.getInt("restaurantId"),
-                    res.getString("menuName"),
-                    res.getFloat("price"),
-                    res.getString("description"),
-                    res.getBoolean("isAvailable"),
-                    res.getString("imgPath")
-                ));
+                menuList.add(createMenuFromResultSet(res));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return menuList;
+    }
+
+    private Menu extractMenuFromResultSet(ResultSet res) {
+        try {
+            if (res.next()) {
+                return createMenuFromResultSet(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Menu createMenuFromResultSet(ResultSet res) throws SQLException {
+        return new Menu(
+            res.getInt("menuId"),
+            res.getInt("restaurantId"),
+            res.getString("menuName"),
+            res.getFloat("price"),
+            res.getString("description"),
+            res.getBoolean("isAvailable"),
+            res.getString("imgPath")
+        );
     }
 }

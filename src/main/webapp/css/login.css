@@ -62,3 +62,20 @@ button:hover {
     margin-bottom: 10px;
     text-align: center;
 }
+
+/* Account link styling (Similar to the signup link in signup.css) */
+.signup-suggestion {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.signup-suggestion a {
+    color: #388e3c; /* Leaf Green */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-suggestion a:hover {
+    text-decoration: underline;
+}

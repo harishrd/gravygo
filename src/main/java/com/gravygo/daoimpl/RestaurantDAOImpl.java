@@ -1,8 +1,13 @@
 package com.gravygo.daoimpl;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.gravygo.dao.RestaurantDAO;
 import com.gravygo.dbUtils.DBUtils;
 import com.gravygo.model.Restaurant;
@@ -15,12 +20,15 @@ public class RestaurantDAOImpl implements RestaurantDAO {
     List<Restaurant> restaurantList = new ArrayList<>();
     Restaurant restaurant;
 
+    
     private static final String ADD_RESTAURANT = "INSERT INTO `restaurant`(`restaurantName`, `deliveryTime`, `cuisineType`, `address`, `rating`, `isActive`, `adminId`, `imgPath`) VALUES(?,?,?,?,?,?,?,?)";
     private static final String SELECT_ALL_RESTAURANTS = "SELECT * FROM `restaurant`";
     private static final String SELECT_ON_ID = "SELECT * FROM `restaurant` WHERE `restaurantId`=?";
     private static final String UPDATE_ON_ID = "UPDATE `restaurant` SET `restaurantName`=?, `deliveryTime`=?, `cuisineType`=?, `address`=?, `rating`=?, `isActive`=?, `adminId`=?, `imgPath`=? WHERE `restaurantId`=?";
     private static final String DELETE_ON_ID = "DELETE FROM `restaurant` WHERE `restaurantId`=?";
-
+    private static final String GET_NAME_ON_ID = "SELECT `restaurantName` FROM `restaurant` WHERE `restaurantId`=?";
+    
+    
     public RestaurantDAOImpl() {
         try {
             con = DBUtils.myConnect();
@@ -29,6 +37,7 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         }
     }
 
+    
     @Override
     public int addRestaurant(Restaurant restaurant) {
         try {
@@ -49,6 +58,7 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         return 0;
     }
 
+    
     @Override
     public List<Restaurant> getAllRestaurants() {
         try {
@@ -63,6 +73,7 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         return restaurantList;
     }
 
+    
     @Override
     public Restaurant getRestaurantById(int restaurantId) {
         try {
@@ -89,6 +100,7 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         return null;
     }
 
+    
     @Override
     public int updateRestaurant(Restaurant restaurant) {
         try {
@@ -110,6 +122,7 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         return 0;
     }
 
+    
     @Override
     public int deleteRestaurant(int restaurantId) {
         try {
@@ -122,6 +135,24 @@ public class RestaurantDAOImpl implements RestaurantDAO {
         return 0;
     }
 
+    
+    @Override
+    public String getRestaurantNameById(int restaurantId)
+    {
+    	try {
+    		pstmt = con.prepareStatement(GET_NAME_ON_ID);
+    		pstmt.setInt(1, restaurantId);
+    		res = pstmt.executeQuery();
+    		if (res.next()) {
+    			return res.getString("restaurantName");    			
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+    	return "Restaurant name is not available!";
+    }
+    
+    
     private void extractRestaurantsFromResultSet(ResultSet res) {
         try {
             while (res.next()) {

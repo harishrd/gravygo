@@ -1,59 +1,81 @@
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
     margin: 0;
-    padding: 0;
-    color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light Grey Background */
+    color: #333333; /* Neutral Grey */
 }
 
+/* Header Styling */
 header {
+    background-color: #e74c3c; /* Vibrant Red */
+    color: white;
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #e74c3c;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header .project-title {
+    font-size: 24px;
+    font-weight: bold;
     color: white;
-    padding: 10px 20px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2rem;
+header .nav-links {
+    display: flex;
+    gap: 20px;
 }
 
-header nav a {
+header .nav-links a {
     color: white;
     text-decoration: none;
-    margin-left: 20px;
     font-weight: bold;
+    transition: color 0.3s;
 }
 
-header nav a:hover {
+header .nav-links a:hover {
+    color: #f4f4f9; /* Light Grey */
     text-decoration: underline;
 }
 
-.menu-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 40px 20px;
-    justify-content: center;
+/* Heading Style */
+h2 {
+    text-align: center;
+    color: #e74c3c; /* Vibrant Red */
+    margin-bottom: 20px;
 }
 
+/* Menu Container Styling */
+.menu-container {
+    display: flex;
+    flex-direction: column; /* Display items as a vertical list */
+    gap: 20px; /* Add space between items */
+    padding: 40px 20px;
+    align-items: center; /* Center the cards horizontally */
+}
+
+/* Menu Card Styling */
 .menu-card {
+    width: 80%;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Default shadow */
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
 }
 
+/* Subtle Hover Effect */
 .menu-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Gentle background tint */
+    background-color: #f8f8f8; /* Very light gray */
 }
 
+/* Menu Card Image Styling */
 .menu-card img {
     width: 100%;
     height: 250px;
@@ -61,45 +83,43 @@ header nav a:hover {
     border-radius: 10px 10px 0 0;
 }
 
+/* Menu Card Title */
 .menu-card h2 {
     margin: 10px 0;
-    color: #e74c3c;
+    color: #e74c3c; /* Vibrant Red for Title */
 }
 
+/* Menu Card Description */
 .menu-card p {
     font-size: 1rem;
     color: #555;
     margin: 5px 0;
 }
 
+/* Price Styling */
 .menu-card .price {
     font-size: 1.4rem;
     font-weight: bold;
     margin: 10px 0;
-    color: #388e3c;
+    color: #388e3c; /* Green for Price */
 }
 
+/* Availability Styling */
 .availability {
     margin-top: 10px;
     font-weight: bold;
-    color: #27ae60;
+    color: #27ae60; /* Green for Available */
 }
 
 .unavailable {
-    color: #c0392b;
+    color: #c0392b; /* Red for Unavailable */
 }
 
+/* Add-to-Cart Button Styling */
 .add-to-cart {
     display: inline-block;
     padding: 10px 15px;
-    background-color: #e74c3c;
+    background-color: #e74c3c; /* Red for Button */
     color: white;
     text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.add-to-cart:hover {
-    background-color: #c0392b;
-}
+    border-radius: 5px

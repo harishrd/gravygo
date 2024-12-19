@@ -19,9 +19,9 @@
 	        <% 
 		        User loggedInUser = (User) session.getAttribute("loggedInUser");
 		        if (loggedInUser != null) { %>
-		            <span>Welcome, <%= loggedInUser.getUsername() %>!</span>
-		            <a href="cart">Cart</a>
-		            <a href="orderhistory">Order History</a>
+		            <%-- <span>Welcome, <%= loggedInUser.getUsername() %>!</span> --%>
+		            <a href="cart.jsp">Cart</a>
+		            <a href="order-history">Order History</a>
 		            <a href="logout">Logout</a>
 	        <% } else { %>
 	            <a href="login.jsp">Login</a>
@@ -29,7 +29,6 @@
 	        <% } %>
 	    </div>
 	</header>	
-    
     
     <h2>Featured Restaurants</h2>
     <section class="restaurant-list">
@@ -59,26 +58,6 @@
 	       }
 	   %>
 	</section>
-    <%-- <section class="restaurant-list">
-    <%
-    	// Get the RestaurantDAO object and fetch all restaurants
-        /* RestaurantDAO restaurantDAO = new RestaurantDAOImpl();
-        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) restaurantDAO.getAllRestaurants(); */
-        ArrayList<Restaurant> restaurants = (ArrayList<Restaurant>) session.getAttribute("restaurants");
-
-        // Display the list of available restaurants
-        if (restaurants != null && !restaurants.isEmpty()) {
-            out.println("<h2>Available Restaurants:</h2>");
-            out.println("<ul>");
-            for (Restaurant restaurant : restaurants) {
-                out.println("<li>" + restaurant.getRestaurantName() + " - " + restaurant.getCuisineType() + "</li>");
-            }
-            out.println("</ul>");
-        } else {
-            out.println("<p>No restaurants available at the moment.</p>");
-        }
-    %>
-    </section> --%>
 </body>
 
 </html>

@@ -13,15 +13,15 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
     private PreparedStatement pstmt;
     private Statement stmt;
     private ResultSet res;
-    List<OrderHistory> orderHistoryList = new ArrayList<>();
+    List<OrderHistory> orderHistoryList;
     OrderHistory orderHistory;
 
-    private static final String ADD_ORDER_HISTORY = "INSERT INTO `order_history`(`orderId`, `userId`, `orderDate`, `totalAmount`, `status`) VALUES (?, ?, ?, ?, ?)";
-    private static final String SELECT_ALL_ORDER_HISTORIES = "SELECT * FROM `order_history`";
-    private static final String SELECT_BY_ORDER_HISTORY_ID = "SELECT * FROM `order_history` WHERE `orderHistoryId` = ?";
-    private static final String SELECT_BY_USER_ID = "SELECT * FROM `order_history` WHERE `userId` = ?";
-    private static final String UPDATE_ORDER_HISTORY = "UPDATE `order_history` SET `orderId`=?, `userId`=?, `orderDate`=?, `totalAmount`=?, `status`=? WHERE `orderHistoryId`=?";
-    private static final String DELETE_ORDER_HISTORY = "DELETE FROM `order_history` WHERE `orderHistoryId` = ?";
+    private static final String ADD_ORDER_HISTORY = "INSERT INTO `orderhistory`(`orderId`, `userId`, `orderDate`, `totalAmount`, `status`) VALUES (?, ?, ?, ?, ?)";
+    private static final String SELECT_ALL_ORDER_HISTORIES = "SELECT * FROM `orderhistory`";
+    private static final String SELECT_BY_ORDER_HISTORY_ID = "SELECT * FROM `orderhistory` WHERE `orderHistoryId` = ?";
+    private static final String SELECT_BY_USER_ID = "SELECT * FROM `orderhistory` WHERE `userId` = ?";
+    private static final String UPDATE_ORDER_HISTORY = "UPDATE `orderhistory` SET `orderId`=?, `userId`=?, `orderDate`=?, `totalAmount`=?, `status`=? WHERE `orderHistoryId`=?";
+    private static final String DELETE_ORDER_HISTORY = "DELETE FROM `orderhistory` WHERE `orderHistoryId` = ?";
 
     public OrderHistoryDAOImpl() {
         try {
@@ -117,7 +117,8 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
     }
 
     private void extractOrderHistoriesFromResultSet(ResultSet res) throws SQLException {
-        while (res.next()) {
+    	orderHistoryList = new ArrayList<>();
+    	while (res.next()) {
             orderHistoryList.add(new OrderHistory(
                     res.getInt("orderHistoryId"),
                     res.getInt("orderId"),

@@ -1,0 +1,144 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light Grey Background */
+    color: #333333; /* Neutral Grey */
+}
+
+/* Header Styling */
+header {
+    background-color: #e74c3c; /* Vibrant Red */
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header .project-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+header .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+header .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header .nav-links a:hover {
+    color: #f4f4f9; /* Light Grey */
+    text-decoration: underline;
+}
+
+/* Cart Container */
+.cart-container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff; /* White Container */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h2 {
+    text-align: center;
+    color: #e74c3c; /* Vibrant Red */
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 1px solid #ccc; /* Light Grey Border */
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #e74c3c; /* Vibrant Red */
+    color: #fff; /* White */
+    font-weight: bold;
+}
+
+table td {
+    background-color: #fff; /* White */
+}
+
+table button {
+    background-color: #388e3c; /* Tomato Leaf Green */
+    color: #fff; /* White */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+table button:hover {
+    background-color: #2c6e2f; /* Darker Green */
+}
+
+table button:disabled {
+    background-color: #ccc; /* Disabled Button */
+    cursor: not-allowed;
+}
+
+.cart-summary {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.cart-summary h3 {
+    color: #e74c3c; /* Vibrant Red */
+}
+
+.cart-summary p {
+    font-size: 1.2rem;
+    color: #333; /* Dark Grey */
+}
+
+.cart-summary button {
+    background-color: #388e3c; /* Tomato Leaf Green */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.cart-summary button:hover {
+    background-color: #2c6e2f; /* Darker Green */
+}
+
+.cart-container p {
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.cart-container a {
+    color: #388e3c; /* Tomato Leaf Green */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.cart-container a:hover {
+    color: #2c6e2f; /* Darker Green */
+}

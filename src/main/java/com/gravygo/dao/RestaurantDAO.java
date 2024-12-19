@@ -10,6 +10,7 @@ public interface RestaurantDAO
     Restaurant getRestaurantById(int restaurantId);
     int updateRestaurant(Restaurant restaurant);
     int deleteRestaurant(int restaurantId);
+	String getRestaurantNameById(int restaurantId);
 }
 //
 //

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,16 +15,15 @@ public class OrderItemDAOImpl implements OrderItemDAO
 {
     Connection con;
     private PreparedStatement pstmt;
-    private Statement stmt;
     private ResultSet res;
-    List<OrderItem> orderItemList = new ArrayList<>();
+    List<OrderItem> orderItemList;
     OrderItem orderItem;
 
-    private static final String ADD_ORDER_ITEM = "insert into `order_item`(`orderId`, `menuId`, `quantity`, `subTotal`) values(?,?,?,?)";
-    private static final String SELECT_ALL_ORDER_ITEMS = "select * from `order_item`";
-    private static final String SELECT_ON_ID = "select * from `order_item` where `orderItemId`=?";
-    private static final String UPDATE_ON_ID = "update `order_item` set `orderId`=?, `menuId`=?, `quantity`=?, `subTotal`=? where `orderItemId`=?";
-    private static final String DELETE_ON_ID = "delete from `order_item` where `orderItemId`=?";
+    private static final String ADD_ORDER_ITEM = "insert into `orderitem`(`orderId`, `menuId`, `quantity`, `subTotal`) values(?,?,?,?)";
+    private static final String SELECT_ALL_ORDER_ITEMS_ON_ID = "select * from `orderitem` where `orderId`=?";
+    private static final String SELECT_ON_ID = "select * from `orderitem` where `orderItemId`=?";
+    private static final String UPDATE_ON_ID = "update `orderitem` set `orderId`=?, `menuId`=?, `quantity`=?, `subTotal`=? where `orderItemId`=?";
+    private static final String DELETE_ON_ID = "delete from `orderitem` where `orderItemId`=?";
 
     public OrderItemDAOImpl() 
     {
@@ -53,10 +51,11 @@ public class OrderItemDAOImpl implements OrderItemDAO
     }
 
     @Override
-    public List<OrderItem> getAllOrderItems() {
+    public List<OrderItem> getItemsByOrderId(int orderId) {
         try {
-            stmt = con.createStatement();
-            res = stmt.executeQuery(SELECT_ALL_ORDER_ITEMS);
+            pstmt = con.prepareStatement(SELECT_ALL_ORDER_ITEMS_ON_ID);
+            pstmt.setInt(1, orderId);
+            res = pstmt.executeQuery();
 
             extractOrderItemsFromResultSet(res);
         } catch (SQLException e) {
@@ -64,7 +63,7 @@ public class OrderItemDAOImpl implements OrderItemDAO
         }
         return orderItemList;
     }
-
+    
     @Override
     public OrderItem getOrderItemById(int orderItemId) {
         try {
@@ -108,6 +107,7 @@ public class OrderItemDAOImpl implements OrderItemDAO
     }
 
     private void extractOrderItemsFromResultSet(ResultSet res) {
+    	orderItemList = new ArrayList<>();
         try {
             while (res.next()) {
                 orderItemList.add(new OrderItem(
